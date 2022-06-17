@@ -104,6 +104,9 @@ body {
 .card-post {
   border: 2px black solid;
 }
+.post-img {
+  width: 50%;
+}
 
 .post-name {
   font-size: 19px;
@@ -112,4 +115,9 @@ body {
 }
 .post-description {
   text-align: center;
+}
+
+/*  CREATE POST */
+.create-post-img {
+  width: 60%;
 }

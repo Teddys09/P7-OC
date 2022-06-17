@@ -27,12 +27,13 @@ function sauceHome(req, res) {
 }
 
 function sauceCreate(req, res) {
+  JSON.stringify(req.body);
   console.log('LALALALA', req.body);
-
+  console.log(req.get('host'));
   const imageUrl = req.file.destination + req.file.filename;
 
-  const { name, description, userId } = sauces;
-
+  const { name, description, userId } = req.body;
+  console.log(req.body.file);
   const sauce = new Sauce({
     userId: userId,
     name: name,
@@ -123,6 +124,8 @@ function makeImageUrl(req) {
 // 'http://localhost:3000/images/1653557517023-3.bmp',
 
 function sendClientResponse(product, res) {
+  console.log(product);
+
   if (product == null) {
     console.log('NOTHING TO UPDATE');
     return res.status(404).send({ message: 'Object not found in database' });

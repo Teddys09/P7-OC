@@ -5,11 +5,11 @@ import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa';
 
 const Post = () => {
   const [data, setData] = useState([]);
-  const [test, setTest] = useState('');
+
   let like = '';
   let postId = '';
   let userLikes = '';
-  console.log(test);
+
   const handleLikes = (e) => {
     if (e) {
       console.log(e);
@@ -77,7 +77,9 @@ const Post = () => {
       {data.map((post) => (
         <div className={'card-post ' + post._id} key={post._id}>
           <p className="post-name"> {post.name}</p>
-          <div>Image</div>
+          <div>
+            <img className="post-img" src={post.file} alt="" />
+          </div>
           <p className="post-description">{post.description}</p>
           <FaRegThumbsUp
             key={post._id}

@@ -5,6 +5,7 @@ const port = 5000;
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
+const multer = require('multer');
 
 //Database
 require('./mongo');
@@ -27,9 +28,8 @@ app.use(cors());
 app.use(express.json());
 //app.use(bodyParser.urlencoded({ entended: true }));
 app.use(bodyParser.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/images', express.static(path.join(__dirname, 'images')));
-const multer = require('multer');
 const storage = multer.diskStorage({
   destination: 'images/',
   filename: imageName,
@@ -51,7 +51,7 @@ app.post('/api/auth/signup', signupUser);
 app.post('/api/auth/login', loginUser);
 app.get('/api/usertoken', scanUser);
 app.get('/api/home', scanUser, sauceHome);
-app.post('/api/create/post', scanUser, upload.single('image'), sauceCreate);
+app.post('/api/create/post', scanUser, upload.single('file'), sauceCreate);
 app.get('/api/post/:id', scanUser, sauceId);
 app.delete('/api/post/:id', scanUser, sauceDelete);
 app.put(

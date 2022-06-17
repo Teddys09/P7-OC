@@ -23,6 +23,7 @@ function updatePouce(like, userId, post) {
 }
 
 function resetPouce(sauce, userId, res) {
+  console.log('reset?');
   const { usersLiked, usersDisliked } = sauce;
   if ([usersLiked, usersDisliked].every((arr) => arr.includes(userId)))
     return Promise.reject('User seems to have voted both ways');
@@ -45,7 +46,7 @@ function incrementPouce(userId, like, post) {
   console.log('User', like);
   let { likes, dislikes } = post;
   const { usersLiked, usersDisliked } = post;
-
+  console.log(likes);
   const votersArray = like === 1 ? usersLiked : usersDisliked;
   if (votersArray.includes(userId)) return post;
   votersArray.push(userId);
