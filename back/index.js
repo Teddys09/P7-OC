@@ -53,11 +53,11 @@ app.get('/api/usertoken', scanUser);
 app.get('/api/home', scanUser, sauceHome);
 app.post('/api/create/post', scanUser, upload.single('file'), sauceCreate);
 app.get('/api/post/:id', scanUser, sauceId);
-app.delete('/api/post/:id', scanUser, sauceDelete);
+app.delete('/api/delete/:id', scanUser, sauceDelete);
 app.put(
-  '/api/post/:id',
+  '/api/modify',
   scanUser,
-  upload.single('image'),
+  upload.single('file'),
   sauceModify,
   sendClientResponse
 );

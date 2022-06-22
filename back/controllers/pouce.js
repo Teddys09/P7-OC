@@ -11,7 +11,6 @@ function saucePouce(req, res) {
   sauceIdPouce(req, res)
     .then((post) => updatePouce(like, userId, post))
     .then((post) => post.save())
-
     .then((req) => sendClientResponse(req, res))
     .catch((err) => console.log('Problème Update', err));
 }
@@ -19,12 +18,13 @@ function saucePouce(req, res) {
 function updatePouce(like, userId, post) {
   console.log('reqqq', like);
   if (like === 1 || like === -1) return incrementPouce(userId, like, post);
-  return resetPouce(userId, res);
+  return resetPouce(userId, post);
 }
 
-function resetPouce(sauce, userId, res) {
-  console.log('reset?');
-  const { usersLiked, usersDisliked } = sauce;
+function resetPouce(userId, post) {
+  console.log('reset?', userId);
+
+  const { usersLiked, usersDisliked } = post;
   if ([usersLiked, usersDisliked].every((arr) => arr.includes(userId)))
     return Promise.reject('User seems to have voted both ways');
 
@@ -32,27 +32,28 @@ function resetPouce(sauce, userId, res) {
     return Promise.reject('User seems to not have voted');
 
   if (usersLiked.includes(userId)) {
-    --sauce.likes;
-    sauce.usersLiked = sauce.usersLiked.filter((id) => id !== userId);
+    --post.likes;
+    post.usersLiked = post.usersLiked.filter((id) => id !== userId);
   } else {
-    --sauce.dislikes;
-    sauce.usersDisliked = sauce.usersDisliked.filter((id) => id !== userId);
+    --post.dislikes;
+    post.usersDisliked = post.usersDisliked.filter((id) => id !== userId);
   }
 
-  return sauce;
+  return post;
 }
 
 function incrementPouce(userId, like, post) {
-  console.log('User', like);
-  let { likes, dislikes } = post;
+  console.log(userId);
+
   const { usersLiked, usersDisliked } = post;
-  console.log(likes);
+
   const votersArray = like === 1 ? usersLiked : usersDisliked;
   if (votersArray.includes(userId)) return post;
   votersArray.push(userId);
-  console.log(like);
-  like === 1 ? ++likes : ++dislikes;
-  console.log(likes);
+
+  like === 1 ? ++post.likes : ++post.dislikes;
+  console.log(post.likes);
+
   console.log('LaLe', post);
   return post;
 }

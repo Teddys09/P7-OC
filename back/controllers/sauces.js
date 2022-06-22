@@ -55,8 +55,9 @@ function sauceCreate(req, res) {
 }
 
 function sauceId(req, res) {
-  console.log(req.body._id);
-  const id = req.body._id;
+  console.log(req.params.id);
+  const id = req.params.id;
+  console.log(id);
   Sauce.findById(id)
     .then((sauce) => {
       res.send(sauce);
@@ -84,18 +85,17 @@ function sauceDelete(req, res) {
 }
 
 function imageDelete(sauce) {
-  const imageUrl = sauce.imageUrl;
-  console.log('image a DELETE', sauce.imageUrl);
-  const imageToDelete = sauce.imageUrl.split('/').at(-1);
+  console.log(sauce);
+  const imageUrl = sauce.file;
+  console.log('image a DELETE', sauce);
+  const imageToDelete = sauce.file.split('/').at(-1);
   unlink(`images/${imageToDelete}`, (err) => {
     console.log(err);
   });
 }
 
 function sauceModify(req, res) {
-  const {
-    params: { id },
-  } = req;
+  const id = req.body._id;
 
   const hasNewImage = req.file != null;
 
@@ -111,8 +111,8 @@ function makePayload(hasNewImage, req) {
   console.log('hasNewImage:', hasNewImage);
   console.log('reqbody', req.body);
   if (!hasNewImage) return req.body;
-  const payload = JSON.parse(req.body.sauce);
-  payload.imageUrl = makeImageUrl(req);
+  const payload = req.body;
+  payload.file = makeImageUrl(req);
   console.log('NOUVELLE IMAGE A GERER');
   console.log('voici le payload:', payload);
   return payload;
@@ -124,8 +124,6 @@ function makeImageUrl(req) {
 // 'http://localhost:3000/images/1653557517023-3.bmp',
 
 function sendClientResponse(product, res) {
-  console.log(product);
-
   if (product == null) {
     console.log('NOTHING TO UPDATE');
     return res.status(404).send({ message: 'Object not found in database' });

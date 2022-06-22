@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { UidContext } from './components/AppContext';
 import Createpost from './components/Createpost';
+import ModifyPost from './components/ModifyPost';
 import Accueil from './pages/Accueil';
 
 import Auth from './pages/Auth';
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<Auth />} />
         <Route path="/Accueil" element={<Accueil />} />
         <Route path="/CreatePost" element={<Createpost />} />
+        <Route path="/Modifier/*" element={<ModifyPost />} />
         <Route path="*" element={<Auth />} />
       </Routes>
     </BrowserRouter>
