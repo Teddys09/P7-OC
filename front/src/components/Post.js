@@ -29,19 +29,23 @@ const Post = () => {
       .catch((err) => console.log(err));
     window.location.reload(false);
   };
-
+  const admin = '62b3595fc3626d77bb79cf9a';
   const modifyPost = (id, userId) => {
     if (userId === localStorage.getItem('userId')) {
       return <a href={'/Modifier/?id=' + id}>Modifier</a>;
+    }
+    if (localStorage.getItem('userId') === admin) {
+      return <a href={'/Modifier/?id=' + id}>Modifier</a>;
     } else {
-      console.log('user Not true');
+      return;
     }
   };
   const deleteCard = (id, userId) => {
     if (userId === localStorage.getItem('userId')) {
       return <button onClick={() => deletePost(id, userId)}>Supprimer</button>;
-    } else {
-      console.log('user Not true');
+    }
+    if (localStorage.getItem('userId') === admin) {
+      return <button onClick={() => deletePost(id, userId)}>Supprimer</button>;
     }
   };
 

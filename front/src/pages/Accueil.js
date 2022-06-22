@@ -4,6 +4,10 @@ import Navigation from '../components/Navigation';
 import Post from '../components/Post';
 
 const Accueil = () => {
+  const handleDisconnect = () => {
+    localStorage.clear();
+    window.location = '/Auth';
+  };
   return (
     <div>
       <div className="head-auth">
@@ -11,6 +15,7 @@ const Accueil = () => {
           className="banner-head"
           style={{ backgroundImage: 'url(/img/logohead2.png)' }}
         ></div>
+        <button onMouseUp={() => handleDisconnect()}>Déconnexion</button>
 
         <Navigation />
       </div>
