@@ -5,17 +5,13 @@ import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa';
 
 const Post = () => {
   const [data, setData] = useState([]);
-  const [updateLikes, setUpdateLikes] = useState(0);
-  const [updateDislikes, setUpdateDislikes] = useState(0);
-  const [test, setTest] = useState();
-  let firstClick = true;
-  let firstDisClick = true;
+  const [updateLikes, setUpdateLikes] = useState();
+  const [updateDislikes, setUpdateDislikes] = useState();
 
-  let like = 0;
+  let like = Number(0);
   let postId = '';
   let userLikes = '';
   const deletePost = (id, userId) => {
-    console.log('hello');
     axios({
       method: 'delete',
       url: `http://localhost:5000/api/delete/${id}`,
@@ -50,45 +46,38 @@ const Post = () => {
   };
 
   const handleLikes = (id) => {
-    if (firstDisClick === false) {
-      return;
-    }
-    if (firstClick) {
-      console.log('true');
-      like = 1;
+    if (like === -1) {
+      like = Number(0);
       postId = id;
       userLikes = localStorage.getItem('userId');
-      firstClick = false;
+      return incrementLike(like);
+    }
+    if (like === 1) {
+      like = Number(0);
+      postId = id;
+      userLikes = localStorage.getItem('userId');
+      return incrementLike(like);
     } else {
-      console.log('false');
-      like = 0;
+      like = Number(1);
       postId = id;
       userLikes = localStorage.getItem('userId');
-      firstClick = true;
+
+      return incrementLike(like);
     }
-    console.log(like);
-    incrementLike();
   };
   const handleDislikes = (id) => {
-    if (firstClick === false) {
-      return;
-    }
-    if (firstDisClick === true) {
-      console.log('true');
+    if (like === 0 || 1) {
       like = -1;
       postId = id;
       userLikes = localStorage.getItem('userId');
-      firstDisClick = false;
+      return incrementLike(like);
     } else {
-      console.log('false');
       like = 0;
       postId = id;
       userLikes = localStorage.getItem('userId');
-      firstDisClick = true;
-    }
-    console.log(like);
 
-    incrementLike();
+      incrementLike(like);
+    }
   };
   const incrementLike = () => {
     axios({
@@ -108,6 +97,7 @@ const Post = () => {
     })
       .then((res) => {
         setUpdateLikes(res.data.likes);
+
         setUpdateDislikes(res.data.dislikes);
       })
       .catch((err) => console.log(err));
@@ -126,7 +116,6 @@ const Post = () => {
     })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -149,20 +138,18 @@ const Post = () => {
               className={post._id}
               name="likes"
               onMouseUp={() => {
-                handleLikes(post._id);
-
-                console.log('click');
+                handleLikes(post._id, like);
               }}
             />
-            <p>{post.likes}</p>
+            <p>{updateLikes}</p>
             <FaRegThumbsDown
               className={post._id}
               name="dislikes"
               onMouseUp={() => {
-                handleDislikes(post._id);
+                handleDislikes(post._id, like);
               }}
             />
-            <p>{post.dislikes}</p>
+            <p>{updateDislikes}</p>
 
             <div>{modifyPost(post._id, post.userId)}</div>
             <div>{deleteCard(post._id, post.userId)}</div>

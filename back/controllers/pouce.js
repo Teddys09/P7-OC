@@ -46,7 +46,7 @@ function incrementPouce(userId, like, post) {
   console.log(userId);
 
   const { usersLiked, usersDisliked } = post;
-
+  console.log(usersLiked);
   const votersArray = like === 1 ? usersLiked : usersDisliked;
   if (votersArray.includes(userId)) return post;
   votersArray.push(userId);
