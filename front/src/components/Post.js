@@ -49,16 +49,19 @@ const Post = () => {
     if (like === -1) {
       like = Number(0);
       postId = id;
+      console.log(like);
       userLikes = localStorage.getItem('userId');
       return incrementLike(like);
     }
     if (like === 1) {
       like = Number(0);
       postId = id;
+      console.log(like);
       userLikes = localStorage.getItem('userId');
       return incrementLike(like);
     } else {
       like = Number(1);
+      console.log(like);
       postId = id;
       userLikes = localStorage.getItem('userId');
 
@@ -66,13 +69,15 @@ const Post = () => {
     }
   };
   const handleDislikes = (id) => {
-    if (like === 0 || 1) {
-      like = -1;
+    if (like === -1 || 1) {
+      like = 0;
       postId = id;
       userLikes = localStorage.getItem('userId');
+      console.log(like);
       return incrementLike(like);
     } else {
-      like = 0;
+      like = -1;
+      console.log(like);
       postId = id;
       userLikes = localStorage.getItem('userId');
 
@@ -116,6 +121,7 @@ const Post = () => {
     })
       .then((res) => {
         setData(res.data);
+        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -141,7 +147,7 @@ const Post = () => {
                 handleLikes(post._id, like);
               }}
             />
-            <p>{updateLikes}</p>
+            <p>{post.likes}</p>
             <FaRegThumbsDown
               className={post._id}
               name="dislikes"
@@ -149,7 +155,7 @@ const Post = () => {
                 handleDislikes(post._id, like);
               }}
             />
-            <p>{updateDislikes}</p>
+            <p>{post.dislikes}</p>
 
             <div>{modifyPost(post._id, post.userId)}</div>
             <div>{deleteCard(post._id, post.userId)}</div>
