@@ -140,31 +140,40 @@ const Post = () => {
         .map((post) => (
           <div className={'card-post ' + post._id} key={post._id}>
             <p className="post-name"> {post.name}</p>
-            <div>
+            <div className="post-img-div">
               <img className="post-img" src={post.file} alt="" />
             </div>
             <p className="post-description">{post.description}</p>
-            <FaRegThumbsUp
-              key={post._id}
-              data-foo={post._id}
-              className={post._id}
-              name="likes"
-              onMouseUp={() => {
-                handleLikes(post._id);
-              }}
-            />
-            <p>{post.likes}</p>
-            <FaRegThumbsDown
-              className={post._id}
-              name="dislikes"
-              onMouseUp={() => {
-                handleDislikes(post._id);
-              }}
-            />
-            <p>{post.dislikes}</p>
-
-            <div>{modifyPost(post._id, post.userId)}</div>
-            <div>{deleteCard(post._id, post.userId)}</div>
+            <div className="card-container-like">
+              <div className="card-div-like">
+                <FaRegThumbsUp
+                  className={'card-like ' + post._id}
+                  name="likes"
+                  onMouseUp={() => {
+                    handleLikes(post._id);
+                  }}
+                />
+                <p>{post.likes}</p>
+              </div>
+              <div className="card-div-like">
+                <FaRegThumbsDown
+                  className={'card-like ' + post._id}
+                  name="dislikes"
+                  onMouseUp={() => {
+                    handleDislikes(post._id);
+                  }}
+                />
+                <p>{post.dislikes}</p>
+              </div>
+            </div>
+            <div className="hold-modify-delete">
+              <div className="card-modify">
+                {modifyPost(post._id, post.userId)}
+              </div>
+              <div className="card-delete">
+                {deleteCard(post._id, post.userId)}
+              </div>
+            </div>
           </div>
         ))}
     </div>

@@ -30,28 +30,48 @@ function sauceCreate(req, res) {
   JSON.stringify(req.body);
   console.log('LALALALA', req.body);
   console.log(req.get('host'));
-  const imageUrl = req.file.destination + req.file.filename;
-
   const { name, description, userId } = req.body;
-  console.log(req.body.file);
-  const sauce = new Sauce({
-    userId: userId,
-    name: name,
-    file: req.protocol + '://' + req.get('host') + '/' + imageUrl,
-    description: description,
-    like: 0,
-    likes: 0,
-    dislikes: 0,
-    usersLiked: [],
-    usersDisliked: [],
-  });
-  sauce
-    .save()
-    .then((resSuccess) => {
-      res.send({ message: resSuccess });
-      return console.log('produit enregistré', resSuccess);
-    })
-    .catch((err) => console.log('Problème dans création du Post' + err));
+  if (req.body.file === 'undefined') {
+    const sauce = new Sauce({
+      userId: userId,
+      name: name,
+
+      description: description,
+      like: 0,
+      likes: 0,
+      dislikes: 0,
+      usersLiked: [],
+      usersDisliked: [],
+    });
+    sauce
+      .save()
+      .then((resSuccess) => {
+        res.send({ message: resSuccess });
+        return console.log('produit enregistré', resSuccess);
+      })
+      .catch((err) => console.log('Problème dans création du Post' + err));
+  } else {
+    const imageUrl = req.file.destination + req.file.filename;
+
+    const sauce = new Sauce({
+      userId: userId,
+      name: name,
+      file: req.protocol + '://' + req.get('host') + '/' + imageUrl,
+      description: description,
+      like: 0,
+      likes: 0,
+      dislikes: 0,
+      usersLiked: [],
+      usersDisliked: [],
+    });
+    sauce
+      .save()
+      .then((resSuccess) => {
+        res.send({ message: resSuccess });
+        return console.log('produit enregistré', resSuccess);
+      })
+      .catch((err) => console.log('Problème dans création du Post' + err));
+  }
 }
 
 function sauceId(req, res) {

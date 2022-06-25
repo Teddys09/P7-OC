@@ -19,7 +19,12 @@ const Accueil = () => {
 
         <Navigation />
       </div>
-      <a href="/Createpost"> Ajouter un Post</a>
+      <div className="link-div">
+        <a className="link-add-post" href="/Createpost">
+          {' '}
+          Ajouter un Post
+        </a>
+      </div>
       <div className="post-user">
         <Post />
       </div>

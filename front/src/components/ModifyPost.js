@@ -86,6 +86,12 @@ const ModifyPost = () => {
   };
   return (
     <form action="" onSubmit={handlePost} id="post-form">
+      <div className="head-auth">
+        <div
+          className="banner-head"
+          style={{ backgroundImage: 'url(/img/logohead2.png)' }}
+        ></div>
+      </div>
       <label htmlFor="name">Titre</label>
       <br />
       <input
