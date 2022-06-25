@@ -44,6 +44,7 @@ const Createpost = () => {
     })
       .then(() => {
         console.log('Réussi!!');
+        window.location = '/Accueil';
 
         //Redirige après connexion avec bon identifiant
         //  window.location = '/Accueil';

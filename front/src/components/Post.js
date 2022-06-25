@@ -45,11 +45,7 @@ const Post = () => {
     }
   };
 
-  const handleLikes = (id, usersLiked) => {
-    console.log(usersLiked);
-    if (usersLiked.includes(localStorage.getItem('userId'))) {
-      setLike(Number(1));
-    }
+  const handleLikes = (id) => {
     if (like === -1) {
       setLike(Number(0));
       setPostId(id);
@@ -129,12 +125,12 @@ const Post = () => {
     })
       .then((res) => {
         setData(res.data);
-        setLikes(res.data[0].likes);
-        setDisLikes(res.data[0].dislikes);
-        console.log(res.data[0].likes);
+        //  setLikes(res.data[0].likes);
+        //  setDisLikes(res.data[0].dislikes);
+        // console.log(res.data[0].likes);
       })
       .catch((err) => console.log(err));
-  }, [postId]);
+  }, [likes, disLikes]);
 
   return (
     <div className="card-home">
@@ -154,10 +150,10 @@ const Post = () => {
               className={post._id}
               name="likes"
               onMouseUp={() => {
-                handleLikes(post._id, post.usersLiked);
+                handleLikes(post._id);
               }}
             />
-            <p>{likes}</p>
+            <p>{post.likes}</p>
             <FaRegThumbsDown
               className={post._id}
               name="dislikes"
@@ -165,7 +161,7 @@ const Post = () => {
                 handleDislikes(post._id);
               }}
             />
-            <p>{disLikes}</p>
+            <p>{post.dislikes}</p>
 
             <div>{modifyPost(post._id, post.userId)}</div>
             <div>{deleteCard(post._id, post.userId)}</div>
