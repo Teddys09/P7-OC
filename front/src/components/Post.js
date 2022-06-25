@@ -5,12 +5,12 @@ import { FaRegThumbsDown, FaRegThumbsUp } from 'react-icons/fa';
 
 const Post = () => {
   const [data, setData] = useState([]);
-  const [updateLikes, setUpdateLikes] = useState();
-  const [updateDislikes, setUpdateDislikes] = useState();
+  const [like, setLike] = useState(0);
+  const [postId, setPostId] = useState('');
+  const [userLikes, setUserLikes] = useState('');
+  const [likes, setLikes] = useState();
+  const [disLikes, setDisLikes] = useState();
 
-  let like = Number(0);
-  let postId = '';
-  let userLikes = '';
   const deletePost = (id, userId) => {
     axios({
       method: 'delete',
@@ -45,46 +45,54 @@ const Post = () => {
     }
   };
 
-  const handleLikes = (id) => {
+  const handleLikes = (id, usersLiked) => {
+    console.log(usersLiked);
+    if (usersLiked.includes(localStorage.getItem('userId'))) {
+      setLike(Number(1));
+    }
     if (like === -1) {
-      like = Number(0);
-      postId = id;
+      setLike(Number(0));
+      setPostId(id);
       console.log(like);
-      userLikes = localStorage.getItem('userId');
-      return incrementLike(like);
+      setUserLikes(localStorage.getItem('userId'));
     }
     if (like === 1) {
-      like = Number(0);
-      postId = id;
+      setLike(Number(0));
+      setPostId(id);
       console.log(like);
-      userLikes = localStorage.getItem('userId');
-      return incrementLike(like);
-    } else {
-      like = Number(1);
+      setUserLikes(localStorage.getItem('userId'));
+    }
+    if (like === 0) {
+      setLike(Number(1));
       console.log(like);
-      postId = id;
-      userLikes = localStorage.getItem('userId');
-
-      return incrementLike(like);
+      setPostId(id);
+      setUserLikes(localStorage.getItem('userId'));
     }
   };
+
   const handleDislikes = (id) => {
-    if (like === -1 || 1) {
-      like = 0;
-      postId = id;
-      userLikes = localStorage.getItem('userId');
+    console.log(like);
+    if (like === 1) {
+      setLike(Number(0));
+      setPostId(id);
       console.log(like);
-      return incrementLike(like);
-    } else {
-      like = -1;
+      setUserLikes(localStorage.getItem('userId'));
+    }
+    if (like === -1) {
+      setLike(Number(0));
+      setPostId(id);
       console.log(like);
-      postId = id;
-      userLikes = localStorage.getItem('userId');
-
-      incrementLike(like);
+      setUserLikes(localStorage.getItem('userId'));
+    }
+    if (like === 0) {
+      setLike(Number(-1));
+      console.log(like);
+      setPostId(id);
+      setUserLikes(localStorage.getItem('userId'));
     }
   };
-  const incrementLike = () => {
+
+  useEffect(() => {
     axios({
       method: 'post',
 
@@ -101,12 +109,12 @@ const Post = () => {
       },
     })
       .then((res) => {
-        setUpdateLikes(res.data.likes);
-
-        setUpdateDislikes(res.data.dislikes);
+        console.log([res.data]);
+        setLikes([res.data.likes]);
+        setDisLikes([res.data.dislikes]);
       })
       .catch((err) => console.log(err));
-  };
+  }, [like]);
 
   useEffect(() => {
     axios({
@@ -121,10 +129,12 @@ const Post = () => {
     })
       .then((res) => {
         setData(res.data);
-        console.log(res.data);
+        setLikes(res.data[0].likes);
+        setDisLikes(res.data[0].dislikes);
+        console.log(res.data[0].likes);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [postId]);
 
   return (
     <div className="card-home">
@@ -144,18 +154,18 @@ const Post = () => {
               className={post._id}
               name="likes"
               onMouseUp={() => {
-                handleLikes(post._id, like);
+                handleLikes(post._id, post.usersLiked);
               }}
             />
-            <p>{post.likes}</p>
+            <p>{likes}</p>
             <FaRegThumbsDown
               className={post._id}
               name="dislikes"
               onMouseUp={() => {
-                handleDislikes(post._id, like);
+                handleDislikes(post._id);
               }}
             />
-            <p>{post.dislikes}</p>
+            <p>{disLikes}</p>
 
             <div>{modifyPost(post._id, post.userId)}</div>
             <div>{deleteCard(post._id, post.userId)}</div>
