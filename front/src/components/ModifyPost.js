@@ -75,7 +75,7 @@ const ModifyPost = () => {
       // formData,
     })
       .then(() => {
-        console.log('Réussi!!');
+        window.location = '/Accueil';
 
         //Redirige après connexion avec bon identifiant
         //  window.location = '/Accueil';
@@ -93,7 +93,7 @@ const ModifyPost = () => {
         ></div>
       </div>
       <label htmlFor="name">Titre</label>
-      <br />
+
       <input
         type="text"
         name="name"
@@ -101,9 +101,9 @@ const ModifyPost = () => {
         onChange={(e) => (testName = e.target.value)}
         defaultValue={oldValue.name}
       />
-      <br />
+
       <label htmlFor="file">Image</label>
-      <br />
+
       <input
         type="file"
         name="file"
@@ -111,9 +111,8 @@ const ModifyPost = () => {
         onChange={(e) => handleChange(e)}
       />
 
-      <br />
       <label htmlFor="description">Description</label>
-      <br />
+
       <input
         type="text"
         name="description"
@@ -121,9 +120,9 @@ const ModifyPost = () => {
         onChange={(e) => (description = e.target.value)}
         defaultValue={oldValue.description}
       />
-      <br />
+
       <input type="submit" className="form-error" value="Modifier le Post" />
-      <br />
+
       <div className="form-malfunction"></div>
       <div className="cancel-form">
         <a href="/Accueil">Retour</a>

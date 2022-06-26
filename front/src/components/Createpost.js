@@ -56,8 +56,14 @@ const Createpost = () => {
 
   return (
     <form action="" onSubmit={handlePost} id="post-form">
+      <div className="head-auth">
+        <div
+          className="banner-head"
+          style={{ backgroundImage: 'url(/img/logohead2.png)' }}
+        ></div>
+      </div>
       <label htmlFor="name">Titre</label>
-      <br />
+
       <input
         type="text"
         name="name"
@@ -65,9 +71,9 @@ const Createpost = () => {
         onChange={(e) => setName(e.target.value)}
         value={name}
       />
-      <br />
+
       <label htmlFor="file">Image</label>
-      <br />
+
       <input
         type="file"
         name="file"
@@ -75,9 +81,9 @@ const Createpost = () => {
         onChange={(e) => handleChange(e)}
       />
       <img className="create-post-img" src={showImage} alt="" />
-      <br />
+
       <label htmlFor="description">Description</label>
-      <br />
+
       <input
         type="text"
         name="description"
@@ -85,9 +91,9 @@ const Createpost = () => {
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
-      <br />
+
       <input type="submit" className="form-error" value="Ajouter le Post" />
-      <br />
+
       <div className="form-malfunction"></div>
       <div className="cancel-form">
         <a href="/Accueil">Retour</a>

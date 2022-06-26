@@ -22,6 +22,7 @@ body {
   font-family: 'lato';
   font-weight: 700;
   background-color: #4e5166;
+  font-weight: 700;
 }
 .head-auth button:hover {
   cursor: pointer;
@@ -132,6 +133,7 @@ body {
   text-decoration: none;
   color: #fd2d01;
   width: 100%;
+  font-weight: 700;
 }
 .link-div {
   text-align: center;
@@ -195,9 +197,30 @@ body {
   font-family: 'lato';
   font-weight: 700;
   background-color: #4e5166;
+  cursor: pointer;
 }
 
 /*  CREATE POST */
 .create-post-img {
-  width: 60%;
+  max-height: 200px;
+  object-fit: contain;
+}
+#post-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#post-form input {
+  padding: 4px;
+  border-radius: 10px;
+  border: #4e5166 solid 2px;
+  margin: 5px 0px;
+}
+input#file {
+  border: none;
+}
+.cancel-form a {
+  text-decoration: none;
+  font-weight: 700;
+  color: blue;
 }
