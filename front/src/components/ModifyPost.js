@@ -20,7 +20,6 @@ const ModifyPost = () => {
     })
       .then((res) => {
         setHoldValue(res.data);
-        console.log(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -28,8 +27,6 @@ const ModifyPost = () => {
   let testName = '';
   let imageUrl = undefined;
   let description = '';
-
-  console.log(testName);
 
   function handleChange(e) {
     imageUrl = e.target.files[0];

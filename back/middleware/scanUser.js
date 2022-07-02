@@ -7,7 +7,6 @@ function scanUser(req, res, next) {
     return res.status(403).send({ message: 'Invalid scanUser' });
   const token = header.split(' ')[1];
 
-  console.log(header.split(' ')[1]);
   if (token == null)
     return res.status(403).send({ message: "token can't be null" });
 

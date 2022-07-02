@@ -49,40 +49,39 @@ const Post = () => {
     if (like === -1) {
       setLike(Number(0));
       setPostId(id);
-      console.log(like);
+
       setUserLikes(localStorage.getItem('userId'));
     }
     if (like === 1) {
       setLike(Number(0));
       setPostId(id);
-      console.log(like);
+
       setUserLikes(localStorage.getItem('userId'));
     }
     if (like === 0) {
       setLike(Number(1));
-      console.log(like);
+
       setPostId(id);
       setUserLikes(localStorage.getItem('userId'));
     }
   };
 
   const handleDislikes = (id) => {
-    console.log(like);
     if (like === 1) {
       setLike(Number(0));
       setPostId(id);
-      console.log(like);
+
       setUserLikes(localStorage.getItem('userId'));
     }
     if (like === -1) {
       setLike(Number(0));
       setPostId(id);
-      console.log(like);
+
       setUserLikes(localStorage.getItem('userId'));
     }
     if (like === 0) {
       setLike(Number(-1));
-      console.log(like);
+
       setPostId(id);
       setUserLikes(localStorage.getItem('userId'));
     }
@@ -105,7 +104,6 @@ const Post = () => {
       },
     })
       .then((res) => {
-        console.log([res.data]);
         setLikes([res.data.likes]);
         setDisLikes([res.data.dislikes]);
       })
@@ -121,13 +119,9 @@ const Post = () => {
       headers: {
         Authorization: localStorage.getItem('token'),
       },
-      // withCredentials: true,
     })
       .then((res) => {
         setData(res.data);
-        //  setLikes(res.data[0].likes);
-        //  setDisLikes(res.data[0].dislikes);
-        // console.log(res.data[0].likes);
       })
       .catch((err) => console.log(err));
   }, [likes, disLikes]);

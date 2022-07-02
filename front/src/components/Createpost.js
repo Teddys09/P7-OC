@@ -28,8 +28,7 @@ const Createpost = () => {
     data.append('dislikes', 0);
     data.append('userLiked', []);
     data.append('usersDisliked', []);
-    // setImageUrl(e.target[1].files[0]);
-    console.log(imageUrl);
+
     axios({
       method: 'post',
       url: 'http://localhost:5000/api/create/post',
@@ -43,7 +42,6 @@ const Createpost = () => {
       // formData,
     })
       .then(() => {
-        console.log('Réussi!!');
         window.location = '/Accueil';
 
         //Redirige après connexion avec bon identifiant

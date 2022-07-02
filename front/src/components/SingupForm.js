@@ -28,7 +28,6 @@ const SingupForm = () => {
         },
       })
         .then((res) => {
-          console.log(res);
           window.location = '/Auth';
         })
         .catch((err) => {

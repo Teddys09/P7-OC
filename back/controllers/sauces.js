@@ -19,8 +19,6 @@ const sauceSchema = new mongoose.Schema({
 const Sauce = mongoose.model('Sauce', sauceSchema);
 
 function sauceHome(req, res) {
-  console.log('Token user is true , we are in sauceHome');
-
   Sauce.find({})
     .then((sauces) => res.send(sauces))
     .catch((err) => console.log('SauceHomeerr', err));
@@ -28,8 +26,7 @@ function sauceHome(req, res) {
 
 function sauceCreate(req, res) {
   JSON.stringify(req.body);
-  console.log('LALALALA', req.body);
-  console.log(req.get('host'));
+
   const { name, description, userId } = req.body;
   if (req.body.file === 'undefined') {
     const sauce = new Sauce({
@@ -75,19 +72,16 @@ function sauceCreate(req, res) {
 }
 
 function sauceId(req, res) {
-  console.log(req.params.id);
   const id = req.params.id;
-  console.log(id);
+
   Sauce.findById(id)
     .then((sauce) => {
       res.send(sauce);
     })
     .catch((err) => console.log(err));
 }
-function sauceIdPouce(req, res) {
-  console.log('That', req.body);
+function sauceIdPouce(req) {
   const { _id } = req.body;
-  console.log('LALOO', _id);
 
   return Sauce.findById(_id);
 }
@@ -105,9 +99,6 @@ function sauceDelete(req, res) {
 }
 
 function imageDelete(sauce) {
-  console.log(sauce);
-  const imageUrl = sauce.file;
-  console.log('image a DELETE', sauce);
   const imageToDelete = sauce.file.split('/').at(-1);
   unlink(`images/${imageToDelete}`, (err) => {
     console.log(err);
@@ -128,13 +119,10 @@ function sauceModify(req, res) {
 }
 
 function makePayload(hasNewImage, req) {
-  console.log('hasNewImage:', hasNewImage);
-  console.log('reqbody', req.body);
   if (!hasNewImage) return req.body;
   const payload = req.body;
   payload.file = makeImageUrl(req);
-  console.log('NOUVELLE IMAGE A GERER');
-  console.log('voici le payload:', payload);
+
   return payload;
 }
 function makeImageUrl(req) {
@@ -145,10 +133,8 @@ function makeImageUrl(req) {
 
 function sendClientResponse(product, res) {
   if (product == null) {
-    console.log('NOTHING TO UPDATE');
     return res.status(404).send({ message: 'Object not found in database' });
   }
-  console.log('ALL GOOD, UPDATING:', product);
 
   return Promise.resolve(res.status(200).send(product)).then(() => product);
 }
